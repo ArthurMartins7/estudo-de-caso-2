@@ -4,6 +4,7 @@ import java.time.LocalDate;
 
 public class Pessoa {
 
+	private int idPessoa;
 	private String nome;
 	private LocalDate dataNascimento;
 	private char sexo;
@@ -16,6 +17,14 @@ public class Pessoa {
 	public Pessoa() {
 		super();
 
+	}
+
+	public int getIdPessoa() {
+		return idPessoa;
+	}
+
+	public void setIdPessoa(int idPessoa) {
+		this.idPessoa = idPessoa;
 	}
 
 	public void setNome(String nome) {
