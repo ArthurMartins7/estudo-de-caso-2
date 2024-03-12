@@ -46,4 +46,14 @@ public class Pessoa {
 		this.cpf = cpf;
 	}
 
+	@Override
+	public String toString() {
+		return "Nome: " + nome 
+				+ "Data de nascimento: " + dataNascimento 
+				+ "Sexo: " + sexo 
+				+ "CPF: " + cpf;
+	}
+
+	
+	
 }
