@@ -5,6 +5,7 @@ import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 
 import model.entity.Pessoa;
@@ -27,7 +28,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				novaPessoa.setIdPessoa(resultado.getInt(1));
 			}
 		} catch (SQLException erro) {
-			System.out.println("Erro ao salvar novo jogador");
+			System.out.println("Erro ao salvar nova Pesssoa");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeStatement(pstmt);
@@ -45,8 +46,26 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public boolean excluir(int id) {
-		// TODO Auto-generated method stub
-		return false;
+		String query = "DELETE * from PESSOA where id = " + id;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		boolean excluiu = false;
+
+		try {
+			if (stmt.executeUpdate(query) == 1) {
+				excluiu = true;
+			}
+		} catch (SQLException erro) {
+			System.out.println("Erro: não foi possível deletar a pessoa!!!");
+			System.out.println("Erro" + erro.getMessage());
+
+		} finally {
+
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+
+		return excluiu;
 	}
 
 	@Override
@@ -63,8 +82,33 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public ArrayList<Pessoa> consultarTodos() {
-		// TODO Auto-generated method stub
+		return null;
+		
+	}
+	/*
+		
+	String query = "SELECT * FROM pessoa";
+	Connection conn = Banco.getConnection();
+	Statement stmt = Banco.getStatement(conn);
+	
+	ArrayList<Pessoa> pessoas = new ArrayList<>();
+	
+	ResultSet resultado = null;
+	
+	try {
+		resultado = stmt.executeQuery(query);
+		while (resultado.next()) {
+			
+			Pessoa pessoa = new Pessoa();
+			
+			pessoa.setIdPessoa(Integer.parseInt(resultado.getString("ID")));
+			
+			
+		}
+	
+
 		return null;
 	}
-
+	*/
+	
 }
