@@ -40,13 +40,13 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 	private void preencherParametrosParaInsertOuUpdate(PreparedStatement pstmt, Pessoa novaPessoa) throws SQLException {
 		pstmt.setString(1, novaPessoa.getNome());
 		pstmt.setDate(2, Date.valueOf(novaPessoa.getDataNascimento()));
-		pstmt.setObject(3, novaPessoa.getSexo());
+		pstmt.setString(3, novaPessoa.getSexo());
 		pstmt.setLong(4, novaPessoa.getCpf());
 	}
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "DELETE * from PESSOA where id = " + id;
+		String query = "DELETE FROM Pessoa where idpessoa = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		boolean excluiu = false;
@@ -82,7 +82,38 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public ArrayList<Pessoa> consultarTodos() {
-		return null;
+		
+		ArrayList<Pessoa> pessoas = new ArrayList<>();
+		String query = "SELECT * FROM Pessoa;";
+		
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()) {
+				Pessoa pessoa = new Pessoa();
+				
+				pessoa.setIdPessoa(Integer.parseInt(resultado.getString("idpessoa")));
+				pessoa.setNome(resultado.getString("nome"));
+				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+				pessoa.setSexo(resultado.getString("sexo"));
+				pessoa.setCpf(resultado.getLong("cpf"));
+				pessoas.add(pessoa);
+			}
+		} catch (SQLException erro) {
+			System.out.println("Erro: não foi possível listar todas pessoas.");
+			System.out.println("Erro: " + erro.getMessage());
+			
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return pessoas;
 		
 	}
 	/*

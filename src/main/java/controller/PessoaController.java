@@ -1,5 +1,6 @@
 package controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import jakarta.ws.rs.Consumes;
@@ -20,10 +21,23 @@ public class PessoaController {
 	private PessoaService pessoaService = new PessoaService();
 
 	@POST
-	@Path("/cadastrar")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
 	public Pessoa salvar(Pessoa pessoa) {
 		return pessoaService.salvar(pessoa);
 	}
+	
+	@DELETE
+	@Path("/{id}")
+	public boolean excluir(@PathParam("id") int id){
+		 return pessoaService.excluir(id);
+	}
+	
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Pessoa> listarPessoasController() {
+		return pessoaService.listarTodasAsPessoas();
+		
+	}
+	
 }

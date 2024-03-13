@@ -7,7 +7,7 @@ public class Pessoa {
 	private int idPessoa;
 	private String nome;
 	private LocalDate dataNascimento;
-	private char sexo;
+	private String sexo;
 	private long cpf;
 
 	public String getNome() {
@@ -39,11 +39,11 @@ public class Pessoa {
 		this.dataNascimento = dataNascimento;
 	}
 
-	public char getSexo() {
+	public String getSexo() {
 		return sexo;
 	}
 
-	public void setSexo(char sexo) {
+	public void setSexo(String sexo) {
 		this.sexo = sexo;
 	}
 
