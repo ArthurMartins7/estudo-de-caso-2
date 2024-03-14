@@ -9,7 +9,7 @@ public class Pessoa {
 	private LocalDate dataNascimento;
 	private String sexo;
 	private String cpf;
-	private String tipoDePessoa;
+	private int tipoDePessoa;
 
 	public String getNome() {
 		return nome;
@@ -56,11 +56,11 @@ public class Pessoa {
 		this.cpf = cpf;
 	}
 
-	public String getTipoDePessoa() {
+	public int getTipoDePessoa() {
 		return tipoDePessoa;
 	}
 
-	public void setTipoDePessoa(String tipoDePessoa) {
+	public void setTipoDePessoa( int tipoDePessoa) {
 		this.tipoDePessoa = tipoDePessoa;
 	}
 

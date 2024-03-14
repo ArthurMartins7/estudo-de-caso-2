@@ -69,7 +69,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 		pstmt.setDate(2, Date.valueOf(novaPessoa.getDataNascimento()));
 		pstmt.setString(3, novaPessoa.getSexo());
 		pstmt.setString(4, novaPessoa.getCpf());
-		pstmt.setString(5, novaPessoa.getTipoDePessoa());
+		pstmt.setInt(5, novaPessoa.getTipoDePessoa());
 	}
 
 	@Override
@@ -129,7 +129,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 				pessoa.setSexo(resultado.getString("sexo"));
 				pessoa.setCpf(resultado.getString("cpf"));
-				pessoa.setTipoDePessoa(resultado.getString("tipoDePessoa"));
+				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException erro) {
