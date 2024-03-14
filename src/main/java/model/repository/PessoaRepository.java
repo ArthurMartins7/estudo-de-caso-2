@@ -11,10 +11,37 @@ import java.util.ArrayList;
 import model.entity.Pessoa;
 
 public class PessoaRepository implements BaseRepository<Pessoa> {
+	
+	public boolean cpfJaUtilizado(String cpf) {
+		String query = "SELECT * FROM pessoa WHERE cpf = " + cpf;
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		boolean retorno= false;
+		
+		ResultSet resultado = null;
+		
+		try {
+			resultado = stmt.executeQuery(query);
+			if(resultado.next()) {
+				retorno = true;
+			}
+				
+		} catch (SQLException erro) {
+			System.out.println("Erro: Erro ao executar cpfJaUtilizado" );
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		
+		return retorno;
+		
+	}
 
 	@Override
 	public Pessoa salvar(Pessoa novaPessoa) {
-		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf) VALUES (?, ?, ?, ?)";
+		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipoDePessoa) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -41,7 +68,8 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 		pstmt.setString(1, novaPessoa.getNome());
 		pstmt.setDate(2, Date.valueOf(novaPessoa.getDataNascimento()));
 		pstmt.setString(3, novaPessoa.getSexo());
-		pstmt.setLong(4, novaPessoa.getCpf());
+		pstmt.setString(4, novaPessoa.getCpf());
+		pstmt.setString(5, novaPessoa.getTipoDePessoa());
 	}
 
 	@Override
@@ -100,7 +128,8 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				pessoa.setNome(resultado.getString("nome"));
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
 				pessoa.setSexo(resultado.getString("sexo"));
-				pessoa.setCpf(resultado.getLong("cpf"));
+				pessoa.setCpf(resultado.getString("cpf"));
+				pessoa.setTipoDePessoa(resultado.getString("tipoDePessoa"));
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException erro) {

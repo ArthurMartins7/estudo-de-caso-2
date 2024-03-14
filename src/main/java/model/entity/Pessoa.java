@@ -8,7 +8,8 @@ public class Pessoa {
 	private String nome;
 	private LocalDate dataNascimento;
 	private String sexo;
-	private long cpf;
+	private String cpf;
+	private String tipoDePessoa;
 
 	public String getNome() {
 		return nome;
@@ -47,12 +48,20 @@ public class Pessoa {
 		this.sexo = sexo;
 	}
 
-	public long getCpf() {
+	public String getCpf() {
 		return cpf;
 	}
 
-	public void setCpf(long cpf) {
+	public void setCpf(String cpf) {
 		this.cpf = cpf;
+	}
+
+	public String getTipoDePessoa() {
+		return tipoDePessoa;
+	}
+
+	public void setTipoDePessoa(String tipoDePessoa) {
+		this.tipoDePessoa = tipoDePessoa;
 	}
 
 	@Override
@@ -60,7 +69,8 @@ public class Pessoa {
 		return "Nome: " + nome 
 				+ "Data de nascimento: " + dataNascimento 
 				+ "Sexo: " + sexo 
-				+ "CPF: " + cpf;
+				+ "CPF: " + cpf
+				+ "Tipo de Pessoa: " + tipoDePessoa;
 	}
 
 	
