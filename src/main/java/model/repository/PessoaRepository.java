@@ -41,7 +41,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa salvar(Pessoa novaPessoa) {
-		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipoDePessoa) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipo) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -74,7 +74,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "DELETE FROM Pessoa where idpessoa = " + id;
+		String query = "DELETE FROM Pessoa where id = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		boolean excluiu = false;
@@ -124,12 +124,13 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 			while(resultado.next()) {
 				Pessoa pessoa = new Pessoa();
 				
-				pessoa.setIdPessoa(Integer.parseInt(resultado.getString("idpessoa")));
+				pessoa.setIdPessoa(Integer.parseInt(resultado.getString("id")));
 				pessoa.setNome(resultado.getString("nome"));
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+				//SE FOR CHAR DE 1, É SÓ USAR O MÉTODO CHHARAT E PEGAR O INDICE 0
 				pessoa.setSexo(resultado.getString("sexo"));
 				pessoa.setCpf(resultado.getString("cpf"));
-				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
+				pessoa.setTipoDePessoa(resultado.getInt("tipo"));
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException erro) {
