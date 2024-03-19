@@ -41,7 +41,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa salvar(Pessoa novaPessoa) {
-		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipo) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipoDePessoa) VALUES (?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -130,7 +130,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 				//SE FOR CHAR DE 1, É SÓ USAR O MÉTODO CHHARAT E PEGAR O INDICE 0
 				pessoa.setSexo(resultado.getString("sexo"));
 				pessoa.setCpf(resultado.getString("cpf"));
-				pessoa.setTipoDePessoa(resultado.getInt("tipo"));
+				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
 				pessoas.add(pessoa);
 			}
 		} catch (SQLException erro) {
