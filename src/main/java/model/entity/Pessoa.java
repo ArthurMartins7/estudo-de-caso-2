@@ -10,6 +10,29 @@ public class Pessoa {
 	private String sexo;
 	private String cpf;
 	private int tipoDePessoa;
+	private Pais pais;
+	
+	
+
+	public Pessoa(int idPessoa, String nome, LocalDate dataNascimento, String sexo, String cpf, int tipoDePessoa,
+			Pais pais) {
+		super();
+		this.idPessoa = idPessoa;
+		this.nome = nome;
+		this.dataNascimento = dataNascimento;
+		this.sexo = sexo;
+		this.cpf = cpf;
+		this.tipoDePessoa = tipoDePessoa;
+		this.pais = pais;
+	}
+
+	public Pais getPais() {
+		return pais;
+	}
+
+	public void setPais(Pais pais) {
+		this.pais = pais;
+	}
 
 	public String getNome() {
 		return nome;

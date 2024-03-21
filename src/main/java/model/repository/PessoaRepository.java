@@ -41,7 +41,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa salvar(Pessoa novaPessoa) {
-		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipoDePessoa) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Pessoa (nome, dataNascimento, sexo, cpf, tipoDePessoa, idPais) VALUES (?, ?, ?, ?, ?, ?)";
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
@@ -70,6 +70,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 		pstmt.setString(3, novaPessoa.getSexo());
 		pstmt.setString(4, novaPessoa.getCpf());
 		pstmt.setInt(5, novaPessoa.getTipoDePessoa());
+		pstmt.setInt(6, novaPessoa.getPais().getId());
 	}
 
 	@Override

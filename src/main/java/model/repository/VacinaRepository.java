@@ -23,7 +23,7 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 		try {
 
 			pstmt.setString(1, novaVacina.getNome());
-			pstmt.setString(2, novaVacina.getPaisDeOrigem());
+			pstmt.setInt(2, novaVacina.getPaisDeOrigem().getId());
 			pstmt.setInt(3, novaVacina.getPesquisador().getIdPessoa());
 			pstmt.setInt(4, novaVacina.getEstagioDaPesquisa());
 			pstmt.setDate(5, Date.valueOf(novaVacina.getDataDeInicioDaPesquisa()));
@@ -103,7 +103,10 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 				vacina.setNome(resultado.getString("nome"));
 				vacina.setDataDeInicioDaPesquisa(resultado.getDate("dataDeInicioDaPesquisa").toLocalDate());
 				vacina.setEstagioDaPesquisa(resultado.getInt("estagio"));
-				vacina.setPaisDeOrigem(resultado.getString("pais_origem"));
+				
+				PaisRepository paisRepository = new PaisRepository();
+				
+				vacina.setPaisDeOrigem(paisRepository.consultarPorId(resultado.getInt("pais_origem")));
 				//vacina.setPesquisador();
 				
 				

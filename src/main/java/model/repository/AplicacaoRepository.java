@@ -23,7 +23,7 @@ public class AplicacaoRepository implements BaseRepository<Aplicacao> {
 		try {
 			pstmt.getGeneratedKeys();
 			
-			pstmt.setInt(1, novaAplicacao.getPessoaAplicada().getIdPessoa());
+			pstmt.setInt(1, novaAplicacao.getIdPessoa());
 			pstmt.setInt(2, novaAplicacao.getVacinaAplicada().getId());
 			pstmt.setDate(3, Date.valueOf(novaAplicacao.getDataDaAplicacao()));
 			pstmt.setInt(4, novaAplicacao.getAvaliacao());
