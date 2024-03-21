@@ -3,7 +3,7 @@ package model.entity;
 import java.time.LocalDate;
 
 public class Aplicacao {
-
+	private int id;
 	private LocalDate dataDaAplicacao;
 	private Pessoa pessoaAplicada;
 	private Vacina vacinaAplicada;
