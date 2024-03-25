@@ -30,20 +30,24 @@ public class PaisRepository {
 		} catch (SQLException e) {
 			System.out.println("Erro ao salvar um pais em paisRepository");
 			System.out.println(e.getMessage());
+		} finally {
+			Banco.closePreparedStatement(pstmt);
+			Banco.closeConnection(conexao);
+
 		}
 		return pais;
 
 	}
 
 	public Pais consultarPorId(int id) {
-		String consulta = "SELECT * FROM Pais WHERE ID =" + id;
+		String consulta = "SELECT * FROM Pais WHERE ID = " + id;
 		Connection conexao = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conexao);
 		ResultSet resultado = null;
+	
 		Pais pais = new Pais();
-
 		try {
-
+			resultado = stmt.executeQuery(consulta);
 			if (resultado.next()) {
 				
 				pais.setId(resultado.getInt("id"));
@@ -55,9 +59,14 @@ public class PaisRepository {
 		} catch (Exception e) {
 			System.out.println("Erro ao consultar um novo pais");
 			System.out.println(e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conexao);
+
 		}
 
-		return null;
+		return pais;
 
 	}
 

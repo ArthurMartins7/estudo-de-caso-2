@@ -11,32 +11,32 @@ import java.util.ArrayList;
 import model.entity.Pessoa;
 
 public class PessoaRepository implements BaseRepository<Pessoa> {
-	
+
 	public boolean cpfJaUtilizado(String cpf) {
 		String query = "SELECT * FROM pessoa WHERE cpf = " + cpf;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-		boolean retorno= false;
-		
+		boolean retorno = false;
+
 		ResultSet resultado = null;
-		
+
 		try {
 			resultado = stmt.executeQuery(query);
-			if(resultado.next()) {
+			if (resultado.next()) {
 				retorno = true;
 			}
-				
+
 		} catch (SQLException erro) {
-			System.out.println("Erro: Erro ao executar cpfJaUtilizado" );
+			System.out.println("Erro: Erro ao executar cpfJaUtilizado");
 			System.out.println("Erro: " + erro.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
+
 		return retorno;
-		
+
 	}
 
 	@Override
@@ -105,30 +105,58 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa consultarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		String consulta = "SELECT * FROM Pessoa WHERE id" + id;
+		Connection conexao = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conexao);
+		ResultSet resultado = null;
+		Pessoa pessoa = new Pessoa();
+
+		try {
+			resultado = stmt.executeQuery(consulta);
+
+			if (resultado.next()) {
+				pessoa.setIdPessoa(resultado.getInt("id"));
+				pessoa.setCpf(resultado.getString("cpf"));
+				pessoa.setNome(resultado.getString("nome"));
+				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
+				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
+				pessoa.setSexo(resultado.getString("sexo"));
+				PaisRepository pais = new PaisRepository();
+				pessoa.setPais(pais.consultarPorId(resultado.getInt("idPais")));
+
+			}
+		} catch (SQLException e) {
+			System.out.println("Erro ao tentar o método: ConsultarPorId");
+			System.out.println(e.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conexao);
+		}
+
+		return pessoa;
 	}
 
 	@Override
 	public ArrayList<Pessoa> consultarTodos() {
-		
+
 		ArrayList<Pessoa> pessoas = new ArrayList<>();
 		String query = "SELECT * FROM Pessoa;";
-		
+
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-		
+
 		ResultSet resultado = null;
-		
+
 		try {
 			resultado = stmt.executeQuery(query);
-			while(resultado.next()) {
+			while (resultado.next()) {
 				Pessoa pessoa = new Pessoa();
-				
+
 				pessoa.setIdPessoa(Integer.parseInt(resultado.getString("id")));
 				pessoa.setNome(resultado.getString("nome"));
 				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
-				//SE FOR CHAR DE 1, É SÓ USAR O MÉTODO CHHARAT E PEGAR O INDICE 0
+				// SE FOR CHAR DE 1, É SÓ USAR O MÉTODO CHHARAT E PEGAR O INDICE 0
 				pessoa.setSexo(resultado.getString("sexo"));
 				pessoa.setCpf(resultado.getString("cpf"));
 				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
@@ -137,40 +165,36 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 		} catch (SQLException erro) {
 			System.out.println("Erro: não foi possível listar todas pessoas.");
 			System.out.println("Erro: " + erro.getMessage());
-			
+
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-		
+
 		return pessoas;
-		
+
 	}
 	/*
-		
-	String query = "SELECT * FROM pessoa";
-	Connection conn = Banco.getConnection();
-	Statement stmt = Banco.getStatement(conn);
-	
-	ArrayList<Pessoa> pessoas = new ArrayList<>();
-	
-	ResultSet resultado = null;
-	
-	try {
-		resultado = stmt.executeQuery(query);
-		while (resultado.next()) {
-			
-			Pessoa pessoa = new Pessoa();
-			
-			pessoa.setIdPessoa(Integer.parseInt(resultado.getString("ID")));
-			
-			
-		}
-	
+	 * 
+	 * String query = "SELECT * FROM pessoa"; Connection conn =
+	 * Banco.getConnection(); Statement stmt = Banco.getStatement(conn);
+	 * 
+	 * ArrayList<Pessoa> pessoas = new ArrayList<>();
+	 * 
+	 * ResultSet resultado = null;
+	 * 
+	 * try { resultado = stmt.executeQuery(query); while (resultado.next()) {
+	 * 
+	 * Pessoa pessoa = new Pessoa();
+	 * 
+	 * pessoa.setIdPessoa(Integer.parseInt(resultado.getString("ID")));
+	 * 
+	 * 
+	 * }
+	 * 
+	 * 
+	 * return null; }
+	 */
 
-		return null;
-	}
-	*/
-	
 }

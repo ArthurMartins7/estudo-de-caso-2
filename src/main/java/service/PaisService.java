@@ -11,5 +11,10 @@ public class PaisService {
 		return novoPais.salvarPaisRepository(pais);
 		
 	}
+	
+	public Pais consultarPaisPorIdService(int id) {
+		return novoPais.consultarPorId(id);
+		
+	}
 
 }

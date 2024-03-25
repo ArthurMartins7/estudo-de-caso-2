@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.entity.Pais;
 import model.entity.Vacina;
 
 public class VacinaRepository implements BaseRepository<Vacina> {
@@ -76,8 +77,29 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 
 	@Override
 	public Vacina consultarPorId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+		Vacina vacina = new Vacina();
+		String consulta = "SELECT * FROM Vacina WHERE id = " + id;
+		Connection conexao = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conexao);
+		ResultSet resultado = null;
+
+		try {
+			resultado = stmt.executeQuery(consulta);
+			if (resultado.next()) {
+				vacina.setId(resultado.getInt("ID"));
+				PaisRepository pais = new PaisRepository();
+				vacina.setPaisDeOrigem(pais.consultarPorId(resultado.getInt("id")));
+				vacina.setNome(resultado.getString("nome"));
+				vacina.setEstagioDaPesquisa(resultado.getInt("estagio"));
+				vacina.setDataDeInicioDaPesquisa(resultado.getDate("dataAplicacao").toLocalDate());
+				PessoaRepository pessoa = new  PessoaRepository();
+
+			}
+
+		} catch (SQLException e) {
+			
+		}
+		return vacina;
 	}
 
 	@Override
@@ -88,34 +110,31 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 				+ "       v.estagio AS estagio_vacina, v.dataDeInicoDaPesquisa AS data_inicio_pesquisa_vacina,\r\n"
 				+ "       p.id AS id_pesquisador, p.nome AS nome_pesquisador, p.cpf AS cpf_pesquisador,\r\n"
 				+ "       p.dataNascimento AS data_nascimento_pesquisador, p.tipoDePessoa AS tipo_pessoa_pesquisador,\r\n"
-				+ "       p.sexo AS sexo_pesquisador\r\n"
-				+ "FROM Vacina v\r\n"
-				+ "INNER JOIN Pessoa p ON v.idPesquisador = p.id;\r\n"
-				+ "";
+				+ "       p.sexo AS sexo_pesquisador\r\n" + "FROM Vacina v\r\n"
+				+ "INNER JOIN Pessoa p ON v.idPesquisador = p.id;\r\n" + "";
 		Connection conexao = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conexao);
 		ResultSet resultado = null;
-		
+
 		try {
 			while (resultado.next()) {
-				
+
 				vacina.setId(resultado.getInt("id"));
 				vacina.setNome(resultado.getString("nome"));
 				vacina.setDataDeInicioDaPesquisa(resultado.getDate("dataDeInicioDaPesquisa").toLocalDate());
 				vacina.setEstagioDaPesquisa(resultado.getInt("estagio"));
-				
+
 				PaisRepository paisRepository = new PaisRepository();
-				
+
 				vacina.setPaisDeOrigem(paisRepository.consultarPorId(resultado.getInt("pais_origem")));
-				//vacina.setPesquisador();
-				
-				
+				// vacina.setPesquisador();
+
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return null;
 	}
 
