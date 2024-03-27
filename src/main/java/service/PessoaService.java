@@ -29,5 +29,10 @@ public class PessoaService {
 		
 	}
 	
+	public Pessoa consultarPessoaPorIDService(int id) {
+		return pessoaRepository.consultarPorId(id);
+		
+	}
+	
 	
 } 

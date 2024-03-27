@@ -41,4 +41,12 @@ public class PessoaController {
 		
 	}
 	
+	@GET
+	@Path("/consultar/{id}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Pessoa consultarPessoaPorIDController(@PathParam("id") int id) {
+		return pessoaService.consultarPessoaPorIDService(id);
+		
+	}
+	
 }

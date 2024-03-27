@@ -50,7 +50,7 @@ public class PaisRepository {
 			resultado = stmt.executeQuery(consulta);
 			if (resultado.next()) {
 				
-				pais.setId(resultado.getInt("id"));
+				pais.setId(resultado.getInt("idPais"));
 				pais.setNome(resultado.getString("nome"));
 				pais.setSigla(resultado.getString("sigla"));
 
