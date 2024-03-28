@@ -40,7 +40,7 @@ public class PaisRepository {
 	}
 
 	public Pais consultarPorId(int id) {
-		String consulta = "SELECT * FROM Pais WHERE ID = " + id;
+		String consulta = "SELECT * FROM Pais WHERE idPais = " + id;
 		Connection conexao = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conexao);
 		ResultSet resultado = null;

@@ -105,7 +105,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public Pessoa consultarPorId(int id) {
-		String consulta = "SELECT * FROM Pessoa WHERE idPessoa" + id;
+		String consulta = "SELECT * FROM Pessoa WHERE idPessoa = " + id;
 		Connection conexao = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conexao);
 		ResultSet resultado = null;

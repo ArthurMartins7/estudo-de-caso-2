@@ -16,7 +16,7 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 	@Override
 	public Vacina salvar(Vacina novaVacina) {
 
-		String query = "INSERT INTO Vacina (nome, idPais, idPessoa, estagio, dataDeInicioDaPesquisa) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Vacina (nome, idPais, idPessoa, estagioDaPesquisa, dataDeInicioDaPesquisa) VALUES (?, ?, ?, ?, ?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -89,7 +89,7 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 				PaisRepository pais = new PaisRepository();
 				vacina.setPaisDeOrigem(pais.consultarPorId(resultado.getInt("idPais")));
 				vacina.setNome(resultado.getString("nome"));
-				vacina.setEstagioDaPesquisa(resultado.getInt("estagio"));
+				vacina.setEstagioDaPesquisa(resultado.getInt("estagioDaPesquisa"));
 				vacina.setDataDeInicioDaPesquisa(resultado.getDate("dataAplicacao").toLocalDate());
 				PessoaRepository pessoa = new PessoaRepository();
 

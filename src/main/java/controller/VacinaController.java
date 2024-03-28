@@ -44,7 +44,7 @@ public class VacinaController {
 	}
 	
 	@GET
-	@Path("/{id}")
+	@Path("/consultar/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vacina consultarVacinaPorIDController(@PathParam("id")int id) {
 		return vacinaService.consultarPorIdService(id);
