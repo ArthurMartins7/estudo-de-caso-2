@@ -17,7 +17,7 @@ public class PaisController {
 	
 	
 	private PaisService novoPais = new PaisService();
-	
+	@Path("/salvar")
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)

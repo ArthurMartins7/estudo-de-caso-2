@@ -2,6 +2,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import Exception.ControleVacinasException;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
@@ -31,7 +32,7 @@ public class VacinaController {
 	
 	@DELETE 
 	@Path("/{id}")
-	public boolean excluirVacinaController(@PathParam("id")int id) {
+	public boolean excluirVacinaController(@PathParam("id")int id) throws ControleVacinasException {
 		return vacinaService.excluirVacinaService(id);
 	}
 	

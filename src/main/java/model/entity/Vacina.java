@@ -9,12 +9,27 @@ public class Vacina {
 	private Pais paisDeOrigem;
 	private int estagioDaPesquisa;
 	private LocalDate dataDeInicioDaPesquisa;
+	private double media;
 	private Pessoa pesquisador;
 
 	public Vacina() {
 		super();
 
 	}
+	
+	
+
+	public double getMedia() {
+		return media;
+	}
+
+
+
+	public void setMedia(double media) {
+		this.media = media;
+	}
+
+
 
 	public int getId() {
 		return id;

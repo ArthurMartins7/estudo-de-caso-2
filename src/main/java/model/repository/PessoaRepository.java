@@ -75,7 +75,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public boolean excluir(int id) {
-		String query = "DELETE FROM Pessoa where id = " + id;
+		String query = "DELETE FROM Pessoa where idPessoa = " + id;
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
 		boolean excluiu = false;

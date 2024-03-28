@@ -8,6 +8,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import model.entity.Aplicacao;
 import model.entity.Pais;
 import model.entity.Vacina;
 
@@ -16,7 +17,7 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 	@Override
 	public Vacina salvar(Vacina novaVacina) {
 
-		String query = "INSERT INTO Vacina (nome, idPais, idPessoa, estagioDaPesquisa, dataDeInicioDaPesquisa) VALUES (?, ?, ?, ?, ?)";
+		String query = "INSERT INTO Vacina (nome, idPais, idPessoa, estagioDaPesquisa, dataDeInicioDaPesquisa, media) VALUES (?, ?, ?, ?, ?, ?)";
 
 		Connection conn = Banco.getConnection();
 		PreparedStatement pstmt = Banco.getPreparedStatementWithPk(conn, query);
@@ -28,6 +29,8 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 			pstmt.setInt(3, novaVacina.getPesquisador().getIdPessoa());
 			pstmt.setInt(4, novaVacina.getEstagioDaPesquisa());
 			pstmt.setDate(5, Date.valueOf(novaVacina.getDataDeInicioDaPesquisa()));
+			AplicacaoRepository aplicacao = new AplicacaoRepository();
+			pstmt.setDouble(6, aplicacao.calcularMedia(novaVacina.getId()));
 
 			pstmt.execute();
 			ResultSet resultado = pstmt.getGeneratedKeys();
@@ -46,6 +49,8 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 
 		return novaVacina;
 	}
+	
+	
 
 	@Override
 	public boolean excluir(int id) {
