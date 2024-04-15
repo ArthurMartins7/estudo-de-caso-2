@@ -11,13 +11,28 @@ public class Vacina {
 	private LocalDate dataDeInicioDaPesquisa;
 	private double media;
 	private Pessoa pesquisador;
+	private String produtoSeletor;
 
 	public Vacina() {
 		super();
 
 	}
+
 	
-	
+
+	public String getProdutoSeletor() {
+		return produtoSeletor;
+	}
+
+
+
+
+	public void setProdutoSeletor(String produtoSeletor) {
+		this.produtoSeletor = produtoSeletor;
+	}
+
+
+
 
 	public double getMedia() {
 		return media;
