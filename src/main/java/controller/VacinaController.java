@@ -1,6 +1,7 @@
 package controller;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Exception.ControleVacinasException;
 import jakarta.ws.rs.Consumes;
@@ -13,21 +14,36 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.Vacina;
+import model.seletor.VacinaSeletor;
 import service.VacinaService;
 
 @Path("/vacina")
 public class VacinaController {
 
 	private VacinaService vacinaService = new VacinaService();
-
+	
 	@POST
-	@Path("/salvar")
+	@Path("/filtro")
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
+	public List<Vacina> consultarComFiltros(VacinaSeletor seletor){
+		 return vacinaService.consultarComFiltros(seletor);
+	}
 
+	@POST
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
 	public Vacina salvarVacinaController(Vacina vacina) {
 		return vacinaService.salvarVacinaService(vacina);
 
+	}
+	
+
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean atualizar(Vacina vacinaEditada){
+		 return vacinaService.atualizar(vacinaEditada);
 	}
 	
 	@DELETE 
@@ -36,19 +52,20 @@ public class VacinaController {
 		return vacinaService.excluirVacinaService(id);
 	}
 	
-	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Vacina> listarTodasAsVacinasController() {
-		return vacinaService.listarTodasAsVacinasService();
-		
-	}
 	
 	@GET
-	@Path("/consultar/{id}")
+	@Path("/{id}")
 	@Produces(MediaType.APPLICATION_JSON)
 	public Vacina consultarVacinaPorIDController(@PathParam("id")int id) {
 		return vacinaService.consultarPorIdService(id);
+		
+	}
+	
+
+	@GET
+	@Path("/todas")
+	public ArrayList<Vacina> listarTodasAsVacinasController() {
+		return vacinaService.listarTodasAsVacinasService();
 		
 	}
 

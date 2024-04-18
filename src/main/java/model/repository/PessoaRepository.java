@@ -98,9 +98,33 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 	}
 
 	@Override
-	public boolean alterar(Pessoa entidade) {
-		// TODO Auto-generated method stub
-		return false;
+	public boolean alterar(Pessoa pessoaEditada) {
+		boolean alterou = false;
+		String query = " UPDATE exemplos.pessoa "
+				     + " SET nome=?, cpf=?, sexo=?, id_pais=? "
+				     + " data_nascimento=?, tipo=? "
+				     + " WHERE id=? ";
+		Connection conn = Banco.getConnection();
+		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
+		try {
+			stmt.setString(1, pessoaEditada.getNome());
+			stmt.setString(2, pessoaEditada.getCpf());
+			stmt.setString(3, pessoaEditada.getSexo() + "");
+			stmt.setInt(4, pessoaEditada.getPais().getId());
+			stmt.setDate(5, Date.valueOf(pessoaEditada.getDataNascimento()));
+			stmt.setInt(6, pessoaEditada.getTipoDePessoa());
+			
+			stmt.setInt(7, pessoaEditada.getIdPessoa());
+			alterou = stmt.executeUpdate() > 0;
+		} catch (SQLException erro) {
+			System.out.println("Erro ao atualizar pessoa");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return alterou;
+	
 	}
 
 	@Override

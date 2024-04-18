@@ -1,11 +1,13 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Exception.ControleVacinasException;
 import model.entity.Vacina;
 import model.repository.AplicacaoRepository;
 import model.repository.VacinaRepository;
+import model.seletor.VacinaSeletor;
 
 public class VacinaService {
 	
@@ -34,5 +36,12 @@ public class VacinaService {
 		return vacina.consultarPorId(id);
 		
 	}
+	
+	public boolean atualizar(Vacina vacinaEditada) {
+		return vacina.alterar(vacinaEditada);
+	}
 
+	public List<Vacina> consultarComFiltros(VacinaSeletor seletor) {
+		return vacina.consultarComFiltros(seletor);
+	}
 }

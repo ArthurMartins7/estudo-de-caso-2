@@ -4,6 +4,10 @@ import java.time.LocalDate;
 
 public class Vacina {
 
+	public static final int ESTAGIO_INICIAL = 1;
+	public static final int ESTAGIO_TESTES = 2;
+	public static final int ESTAGIO_APLICACAO_MASSA = 3;
+
 	private int id;
 	private String nome;
 	private Pais paisDeOrigem;
@@ -11,40 +15,32 @@ public class Vacina {
 	private LocalDate dataDeInicioDaPesquisa;
 	private double media;
 	private Pessoa pesquisador;
-	private String produtoSeletor;
+
+	public Vacina(int id, String nome, Pais paisDeOrigem, int estagioDaPesquisa, LocalDate dataDeInicioDaPesquisa,
+			double media, Pessoa pesquisador) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.paisDeOrigem = paisDeOrigem;
+		this.estagioDaPesquisa = estagioDaPesquisa;
+		this.dataDeInicioDaPesquisa = dataDeInicioDaPesquisa;
+		this.media = media;
+		this.pesquisador = pesquisador;
+
+	}
 
 	public Vacina() {
 		super();
 
 	}
 
-	
-
-	public String getProdutoSeletor() {
-		return produtoSeletor;
-	}
-
-
-
-
-	public void setProdutoSeletor(String produtoSeletor) {
-		this.produtoSeletor = produtoSeletor;
-	}
-
-
-
-
 	public double getMedia() {
 		return media;
 	}
 
-
-
 	public void setMedia(double media) {
 		this.media = media;
 	}
-
-
 
 	public int getId() {
 		return id;

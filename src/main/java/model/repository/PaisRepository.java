@@ -8,7 +8,7 @@ import java.sql.Statement;
 
 import model.entity.Pais;
 
-public class PaisRepository {
+public class PaisRepository /*implements BaseRepository<Pais>*/{
 
 	public Pais salvarPaisRepository(Pais pais) {
 
