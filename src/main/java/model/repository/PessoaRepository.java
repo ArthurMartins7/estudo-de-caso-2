@@ -199,26 +199,6 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 		return pessoas;
 
 	}
-	/*
-	 * 
-	 * String query = "SELECT * FROM pessoa"; Connection conn =
-	 * Banco.getConnection(); Statement stmt = Banco.getStatement(conn);
-	 * 
-	 * ArrayList<Pessoa> pessoas = new ArrayList<>();
-	 * 
-	 * ResultSet resultado = null;
-	 * 
-	 * try { resultado = stmt.executeQuery(query); while (resultado.next()) {
-	 * 
-	 * Pessoa pessoa = new Pessoa();
-	 * 
-	 * pessoa.setIdPessoa(Integer.parseInt(resultado.getString("ID")));
-	 * 
-	 * 
-	 * }
-	 * 
-	 * 
-	 * return null; }
-	 */
+	 
 
 }

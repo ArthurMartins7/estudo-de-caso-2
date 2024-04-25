@@ -154,7 +154,7 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 				vacina.setId(resultado.getInt("idVacina"));
 				vacina.setNome(resultado.getString("nome"));
 				vacina.setDataDeInicioDaPesquisa(resultado.getDate("dataDeInicioDaPesquisa").toLocalDate());
-				vacina.setEstagioDaPesquisa(resultado.getInt("estagio"));
+				vacina.setEstagioDaPesquisa(resultado.getInt("estagioDaPesquisa"));
 				PaisRepository paisRepository = new PaisRepository();
 				vacina.setPaisDeOrigem(paisRepository.consultarPorId(resultado.getInt("idPais")));
 				PessoaRepository pessoa = new PessoaRepository();

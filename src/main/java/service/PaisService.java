@@ -1,5 +1,7 @@
 package service;
 
+import java.util.ArrayList;
+
 import model.entity.Pais;
 import model.repository.PaisRepository;
 
@@ -14,6 +16,11 @@ public class PaisService {
 	
 	public Pais consultarPaisPorIdService(int id) {
 		return novoPais.consultarPorId(id);
+		
+	}
+	
+	public ArrayList<Pais> consultarTodos() {
+		return novoPais.consultarTodos();
 		
 	}
 

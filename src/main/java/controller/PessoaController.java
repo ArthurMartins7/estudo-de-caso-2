@@ -28,6 +28,13 @@ public class PessoaController {
 		return pessoaService.salvar(pessoa);
 	}
 	
+	@PUT
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.TEXT_PLAIN)
+	public boolean atualizar(Pessoa pessoaEditada) throws ControleVacinasException{
+		 return pessoaService.atualizar(pessoaEditada);
+	}
+	
 	@DELETE
 	@Path("/{id}")
 	public boolean excluir(@PathParam("id") int id) throws ControleVacinasException{

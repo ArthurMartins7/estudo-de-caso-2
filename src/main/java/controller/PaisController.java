@@ -2,6 +2,9 @@ package controller;
 
 
 
+import java.util.ArrayList;
+
+import jakarta.validation.constraints.AssertFalse.List;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -25,6 +28,7 @@ public class PaisController {
 		return novoPais.salvarPaisService(pais);
 		
 	}
+	
 	@Path("/{id}")
 	@GET
 	@Consumes(MediaType.APPLICATION_JSON)
@@ -32,5 +36,13 @@ public class PaisController {
 	public Pais consultarPaisPorIdController(@PathParam("id") int id) {
 		return novoPais.consultarPaisPorIdService(id);
 		
+	}
+	
+	@Path("/todos")
+	@GET
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList<Pais> consultarTodos() {
+		return novoPais.consultarTodos();
 	}
 }
