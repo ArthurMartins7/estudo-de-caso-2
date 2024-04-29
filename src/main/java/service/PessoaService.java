@@ -1,6 +1,7 @@
 package service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import Exception.ControleVacinasException;
 import model.entity.Pessoa;
@@ -14,6 +15,9 @@ public class PessoaService {
 	private AplicacaoRepository aplicacaoRepository = new AplicacaoRepository();
 
 	public Pessoa salvar(Pessoa novaPessoa) throws ControleVacinasException {
+		
+		validarCamposObrigatorios(novaPessoa);
+		
 		if (this.pessoaRepository.cpfJaUtilizado(novaPessoa.getCpf())) {
 			throw new ControleVacinasException("CPF já cadastrado");
 		}
@@ -48,6 +52,12 @@ public class PessoaService {
 
 	}
 	
+	private void validarCpf(Pessoa novaPessoa) throws ControleVacinasException {
+		if(pessoaRepository.cpfJaUtilizado(novaPessoa.getCpf())) {
+			throw new ControleVacinasException("CPF " + novaPessoa.getCpf() + " já cadastrado "); 
+		}
+	}
+	
 	private void validarCamposObrigatorios(Pessoa p) throws ControleVacinasException {
 		String mensagemValidacao = "";
 		if(p.getNome() == null || p.getNome().isEmpty()) {
@@ -74,5 +84,7 @@ public class PessoaService {
 		}
 	}
 	
-
+	public List<Pessoa> consultarPesquisadores() {
+		return this.pessoaRepository.consultarPesquisadores();
+	}
 }

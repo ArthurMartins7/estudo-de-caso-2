@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import model.entity.Pessoa;
 
@@ -100,16 +101,16 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 	@Override
 	public boolean alterar(Pessoa pessoaEditada) {
 		boolean alterou = false;
-		String query = " UPDATE exemplos.pessoa "
-				     + " SET nome=?, cpf=?, sexo=?, id_pais=? "
-				     + " data_nascimento=?, tipo=? "
-				     + " WHERE id=? ";
+		String query = " UPDATE Pessoa "
+				     + " SET nome=?, cpf=?, sexo=?, idPais=?, "
+				     + " dataNascimento=?, tipoDePessoa=? "
+				     + " WHERE idPessoa=? ";
 		Connection conn = Banco.getConnection();
 		PreparedStatement stmt = Banco.getPreparedStatementWithPk(conn, query);
 		try {
 			stmt.setString(1, pessoaEditada.getNome());
 			stmt.setString(2, pessoaEditada.getCpf());
-			stmt.setString(3, pessoaEditada.getSexo() + "");
+			stmt.setString(3, pessoaEditada.getSexo());
 			stmt.setInt(4, pessoaEditada.getPais().getId());
 			stmt.setDate(5, Date.valueOf(pessoaEditada.getDataNascimento()));
 			stmt.setInt(6, pessoaEditada.getTipoDePessoa());
@@ -150,7 +151,7 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 			}
 		} catch (SQLException e) {
-			System.out.println("Erro ao tentar o método: ConsultarPorId");
+			System.out.println("Erro ao tentar consultar pessoa com o id: " + id);
 			System.out.println(e.getMessage());
 		} finally {
 			Banco.closeResultSet(resultado);
@@ -163,42 +164,68 @@ public class PessoaRepository implements BaseRepository<Pessoa> {
 
 	@Override
 	public ArrayList<Pessoa> consultarTodos() {
-
 		ArrayList<Pessoa> pessoas = new ArrayList<>();
-		String query = "SELECT * FROM Pessoa;";
-
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
-
+		
 		ResultSet resultado = null;
-
-		try {
+		String query = " SELECT * FROM pessoa";
+		
+		try{
 			resultado = stmt.executeQuery(query);
-			while (resultado.next()) {
-				Pessoa pessoa = new Pessoa();
-
-				pessoa.setIdPessoa(Integer.parseInt(resultado.getString("idPessoa")));
-				pessoa.setNome(resultado.getString("nome"));
-				pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate());
-				// SE FOR CHAR DE 1, É SÓ USAR O MÉTODO CHHARAT E PEGAR O INDICE 0
-				pessoa.setSexo(resultado.getString("sexo"));
-				pessoa.setCpf(resultado.getString("cpf"));
-				pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
+			while(resultado.next()){
+				Pessoa pessoa = construirDoResultSet(resultado);
 				pessoas.add(pessoa);
 			}
-		} catch (SQLException erro) {
-			System.out.println("Erro: não foi possível listar todas pessoas.");
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todas as pessoas");
 			System.out.println("Erro: " + erro.getMessage());
-
 		} finally {
 			Banco.closeResultSet(resultado);
 			Banco.closeStatement(stmt);
 			Banco.closeConnection(conn);
 		}
-
 		return pessoas;
-
 	}
 	 
+	private Pessoa construirDoResultSet(ResultSet resultado) throws SQLException {
+		Pessoa pessoa = new Pessoa();
+		pessoa.setIdPessoa(resultado.getInt("idPessoa"));
+		pessoa.setNome(resultado.getString("nome"));
+		pessoa.setCpf(resultado.getString("cpf"));
+		pessoa.setSexo(resultado.getString("sexo"));
+		pessoa.setDataNascimento(resultado.getDate("dataNascimento").toLocalDate()); 
+		pessoa.setTipoDePessoa(resultado.getInt("tipoDePessoa"));
+		
+		PaisRepository paisRepository = new PaisRepository();
+		pessoa.setPais(paisRepository.consultarPorId(resultado.getInt("idPais")));
+		
+		return pessoa;
+	}
+	
+	public List<Pessoa> consultarPesquisadores() {
+		ArrayList<Pessoa> pessoas = new ArrayList<>();
+		Connection conn = Banco.getConnection();
+		Statement stmt = Banco.getStatement(conn);
+		
+		ResultSet resultado = null;
+		String query = " SELECT * FROM pessoa WHERE tipoDePessoa = " + Pessoa.PESQUISADOR;
+		
+		try{
+			resultado = stmt.executeQuery(query);
+			while(resultado.next()){
+				Pessoa pessoa = construirDoResultSet(resultado);
+				pessoas.add(pessoa);
+			}
+		} catch (SQLException erro){
+			System.out.println("Erro ao consultar todos os pesquisadores");
+			System.out.println("Erro: " + erro.getMessage());
+		} finally {
+			Banco.closeResultSet(resultado);
+			Banco.closeStatement(stmt);
+			Banco.closeConnection(conn);
+		}
+		return pessoas;
+	}
 
 }

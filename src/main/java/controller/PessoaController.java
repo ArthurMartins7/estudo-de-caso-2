@@ -42,18 +42,23 @@ public class PessoaController {
 	}
 	
 	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<Pessoa> listarPessoasController() {
+	@Path("/todas")
+	public ArrayList<Pessoa> listarTodasPessoas() {
 		return pessoaService.listarTodasAsPessoas();
 		
 	}
 	
 	@GET
-	@Path("/consultar/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Pessoa consultarPessoaPorIDController(@PathParam("id") int id) {
+	@Path("/{id}")
+	public Pessoa consultarPessoaPorId(@PathParam("id") int id) {
 		return pessoaService.consultarPessoaPorIDService(id);
 		
+	}
+	
+	@GET
+	@Path("/pesquisadores")
+	public List<Pessoa> consultarTodosPesquisadores() {
+		return pessoaService.consultarPesquisadores();
 	}
 	
 }

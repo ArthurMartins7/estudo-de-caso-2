@@ -71,7 +71,6 @@ public class PaisRepository /*implements BaseRepository<Pais>*/{
 
 	}
 	
-	
 	public ArrayList<Pais> consultarTodos() {
 		Connection conn = Banco.getConnection();
 		Statement stmt = Banco.getStatement(conn);
@@ -98,6 +97,16 @@ public class PaisRepository /*implements BaseRepository<Pais>*/{
 			Banco.closeConnection(conn);
 		}
 		return paises;
+	}
+
+	public boolean excluir(int id) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	public boolean alterar(Pais entidade) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }

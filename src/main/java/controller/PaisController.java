@@ -4,6 +4,7 @@ package controller;
 
 import java.util.ArrayList;
 
+import Exception.ControleVacinasException;
 import jakarta.validation.constraints.AssertFalse.List;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
@@ -19,30 +20,25 @@ import service.PaisService;
 public class PaisController {
 	
 	
-	private PaisService novoPais = new PaisService();
-	@Path("/salvar")
+	private PaisService paisService = new PaisService();
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Pais salvarPaisController(Pais pais) {
-		return novoPais.salvarPaisService(pais);
+	public Pais salvarPaisController(Pais pais) throws ControleVacinasException{
+		return paisService.salvarPaisService(pais);
 		
 	}
 	
 	@Path("/{id}")
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public Pais consultarPaisPorIdController(@PathParam("id") int id) {
-		return novoPais.consultarPaisPorIdService(id);
+		return paisService.consultarPaisPorIdService(id);
 		
 	}
 	
 	@Path("/todos")
 	@GET
-	@Consumes(MediaType.APPLICATION_JSON)
-	@Produces(MediaType.APPLICATION_JSON)
 	public ArrayList<Pais> consultarTodos() {
-		return novoPais.consultarTodos();
+		return paisService.consultarTodos();
 	}
 }

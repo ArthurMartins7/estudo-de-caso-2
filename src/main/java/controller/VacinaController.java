@@ -33,7 +33,7 @@ public class VacinaController {
 	@POST
 	@Consumes(MediaType.APPLICATION_JSON)
 	@Produces(MediaType.APPLICATION_JSON)
-	public Vacina salvarVacinaController(Vacina vacina) {
+	public Vacina salvarVacina(Vacina vacina) {
 		return vacinaService.salvarVacinaService(vacina);
 
 	}
@@ -48,15 +48,14 @@ public class VacinaController {
 	
 	@DELETE 
 	@Path("/{id}")
-	public boolean excluirVacinaController(@PathParam("id")int id) throws ControleVacinasException {
+	public boolean excluirVacina(@PathParam("id")int id) throws ControleVacinasException {
 		return vacinaService.excluirVacinaService(id);
 	}
 	
 	
 	@GET
 	@Path("/{id}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public Vacina consultarVacinaPorIDController(@PathParam("id")int id) {
+	public Vacina consultarVacinaPorID(@PathParam("id")int id) {
 		return vacinaService.consultarPorIdService(id);
 		
 	}
@@ -64,7 +63,7 @@ public class VacinaController {
 
 	@GET
 	@Path("/todas")
-	public ArrayList<Vacina> listarTodasAsVacinasController() {
+	public ArrayList<Vacina> listarTodasAsVacinas() {
 		return vacinaService.listarTodasAsVacinasService();
 		
 	}
