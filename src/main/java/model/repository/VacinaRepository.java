@@ -206,6 +206,19 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 			query += " upper(p.nome) LIKE UPPER('%" + seletor.getNomePais() + "%')";
 		}
 		
+		if ((seletor.getDataInicioPesquisa() != null) & (seletor.getDataFinalPesquisa() != null)) {
+			//Regra composta, olha as 3 opções de preenchimento do período
+			
+			//Todo o período preenchido (ínicio e fim)
+			// WHERE DATADEINICIODAPESQUISA BETWEEN INICIO AND FIM
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " DATADEINICIODAPESQUISA BETWEEN '" + seletor.getDataInicioPesquisa() + "' AND '" + seletor.getDataFinalPesquisa() + "'";
+		}
+		
 		try{
 			resultado = stmt.executeQuery(query);
 			PessoaRepository pessoaRepository = new PessoaRepository();
