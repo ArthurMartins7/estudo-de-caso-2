@@ -47,7 +47,7 @@ public class VacinaController {
 	}
 	
 	@DELETE 
-	@Path("/{id}")
+	@Path("/excluir/{id}")
 	public boolean excluirVacina(@PathParam("id")int id) throws ControleVacinasException {
 		return vacinaService.excluirVacinaService(id);
 	}
