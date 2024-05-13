@@ -14,6 +14,7 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import model.entity.Pessoa;
+import model.seletor.PessoaSeletor;
 import service.PessoaService;
 
 @Path("/pessoa")
@@ -59,6 +60,15 @@ public class PessoaController {
 	@Path("/pesquisadores")
 	public List<Pessoa> consultarTodosPesquisadores() {
 		return pessoaService.consultarPesquisadores();
+	}
+	
+	@POST
+	@Path("/filtro")
+	@Consumes(MediaType.APPLICATION_JSON)
+	@Produces(MediaType.APPLICATION_JSON)
+	public ArrayList <Pessoa> consultarComSeletor (PessoaSeletor seletor) {
+		return this.pessoaService.consultarComSeletor(seletor);
+		
 	}
 	
 }

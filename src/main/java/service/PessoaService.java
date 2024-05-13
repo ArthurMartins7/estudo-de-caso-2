@@ -7,6 +7,7 @@ import Exception.ControleVacinasException;
 import model.entity.Pessoa;
 import model.repository.AplicacaoRepository;
 import model.repository.PessoaRepository;
+import model.seletor.PessoaSeletor;
 
 public class PessoaService {
 
@@ -87,4 +88,9 @@ public class PessoaService {
 	public List<Pessoa> consultarPesquisadores() {
 		return this.pessoaRepository.consultarPesquisadores();
 	}
+
+	public ArrayList<Pessoa> consultarComSeletor(PessoaSeletor seletor) {
+		return pessoaRepository.consultarPorFiltro(seletor);
+	}
+
 }

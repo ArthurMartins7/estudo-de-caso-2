@@ -219,6 +219,15 @@ public class VacinaRepository implements BaseRepository<Vacina> {
 			query += " DATADEINICIODAPESQUISA BETWEEN '" + seletor.getDataInicioPesquisa() + "' AND '" + seletor.getDataFinalPesquisa() + "'";
 		}
 		
+		if(seletor.getNomePesquisador()!= null) {
+			if(primeiro) {
+				query += " WHERE ";
+			}else {
+				query += " AND ";
+			}
+			query += " pe.nome like '%"+seletor.getNomePesquisador()+"%'";
+		}
+		
 		try{
 			resultado = stmt.executeQuery(query);
 			PessoaRepository pessoaRepository = new PessoaRepository();
